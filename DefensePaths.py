@@ -26,4 +26,10 @@ def BaseballSeams(step, numSeams, B, F = 1):
     z = R * zzz / rrr
 
     return Vec3(x, y, z)
-        
+def CircleXY(radius = 1):
+    x = 50.0 * math.cos(radius)
+    y = 50.0 * math.sin(radius)
+    z = 0
+    unitVec = Vec3(x, y, z)
+    unitVec.normalize()
+    return unitVec * radius

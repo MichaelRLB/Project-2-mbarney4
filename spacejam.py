@@ -1,4 +1,5 @@
 from direct.showbase.ShowBase import ShowBase
+import math, sys, random
 import DefensePaths as defensePaths
 import SpaceJamClasses as spaceJamClasses
 
@@ -7,16 +8,46 @@ class SpaceJam(ShowBase): #Constructor
         ShowBase.__init__(self)
         
         self.SetupScene()
-        # How do I get the cloud defense and baseball seams to spawn?
 
         fullCycle = 60
 
+        self.parent = self.loader.loadModel("./Assets/Drones/JulesVerne.obj")
+
+        x = 0
         for j in range(fullCycle):
             spaceJamClasses.Drone.droneCount += 1
             nickName = "Drone" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet1, nickName)
-            # Figure out how to get baseball seams to work.
             self.DrawBaseballSeams(self.Planet1, nickName, j, fullCycle, 1)
+            # Figure out how to draw circles around the planets.
+
+        for i in range(150):
+            # self.DrawCircleXY            
+            theta = x
+            self.placeholder2 = self.render.attachNewNode('Placeholder2')
+            # How can I get this to form a circle?
+            self.placeholder2.setPos(10.0 * math.cos(theta), 10.0 * math.sin(theta), 0.0 * math.tan(theta))
+            self.parent.instanceTo(self.placeholder2)
+            x = x + 0.06
+
+        for k in range(150):
+            # self.DrawCircleYZ            
+            theta = x
+            self.placeholder3 = self.render.attachNewNode('Placeholder3')
+            # How can I get this to form a circle?
+            self.placeholder3.setPos(0.0, 10.0 * math.sin(theta), 10.0 * math.tan(theta))
+            self.placeholder3.setColorScale(1.0, 0, 0, 0)
+            self.parent.instanceTo(self.placeholder3)
+            x = x + 0.06
+
+        for l in range(150):
+            # self.DrawCircleXZ            
+            theta = x
+            self.placeholder4 = self.render.attachNewNode('Placeholder4')
+            self.placeholder4.setPos(10.0 * math.cos(theta), 0.0, 10.0 * math.tan(theta))
+            self.placeholder4.setColorScale(0, 1.0, 0, 0)
+            self.parent.instanceTo(self.placeholder4)
+            x = x + 0.06
 
     def DrawCloudDefense(self, centralObject, droneName):
         unitVec = defensePaths.Cloud()
@@ -28,6 +59,14 @@ class SpaceJam(ShowBase): #Constructor
         unitVec.normalize()
         position = unitVec * radius * 1000 + centralObject.modelNode.getPos()
         spaceJamClasses.Drone(self.loader, "./Assets/Drones/JulesVerne.obj", self.render, droneName, "./Assets/Drones/Textures/sh3.jpg", position, 200)
+    '''def DrawCircleXY(self, centralObject, droneName):
+        # Figure out how to import math from warmups into DefensePaths.
+        unitVec = defensePaths.CircleXY()
+        unitVec.normalize()
+        #position = unitVec * 100 * 1000 + centralObject.modelNode.getPos()
+        spaceJamClasses.Drone(self.loader, "./Assets/Drones/JulesVerne.obj", self.render, droneName, "./Assets/Drones/Textures/sh3.jpg", position, 100)'''    
+
+
 
     def SetupScene(self):
         # Universe setup
