@@ -34,7 +34,7 @@ class SpaceJam(ShowBase): #Constructor
             # self.DrawCircleYZ            
             theta = x
             self.placeholder3 = self.render.attachNewNode('Placeholder3')
-            # How can I get this to form a circle?
+            # How can I get this to form a circle (what do I need to remove)?
             self.placeholder3.setPos(0.0, 10.0 * math.sin(theta), 10.0 * math.tan(theta))
             self.placeholder3.setColorScale(1.0, 0, 0, 0)
             self.parent.instanceTo(self.placeholder3)
