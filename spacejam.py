@@ -19,9 +19,12 @@ class SpaceJam(ShowBase): #Constructor
             nickName = "Drone" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCloudDefense(self.Planet1, nickName)
             self.DrawBaseballSeams(self.Planet1, nickName, j, fullCycle, 1)
+            self.DrawCircleXY()
+            self.DrawCircleXZ()
+            self.DrawCircleYZ()
             # Figure out how to draw circles around the planets.
 
-        for i in range(150):
+        '''for i in range(150):
             # self.DrawCircleXY            
             theta = x
             self.placeholder2 = self.render.attachNewNode('Placeholder2')
@@ -44,10 +47,11 @@ class SpaceJam(ShowBase): #Constructor
             # self.DrawCircleXZ            
             theta = x
             self.placeholder4 = self.render.attachNewNode('Placeholder4')
+            # How can I get this to form a circle (what do I need to remove)?
             self.placeholder4.setPos(10.0 * math.cos(theta), 0.0, 10.0 * math.tan(theta))
             self.placeholder4.setColorScale(0, 1.0, 0, 0)
             self.parent.instanceTo(self.placeholder4)
-            x = x + 0.06
+            x = x + 0.06'''
 
     def DrawCloudDefense(self, centralObject, droneName):
         unitVec = defensePaths.Cloud()
@@ -59,14 +63,48 @@ class SpaceJam(ShowBase): #Constructor
         unitVec.normalize()
         position = unitVec * radius * 1000 + centralObject.modelNode.getPos()
         spaceJamClasses.Drone(self.loader, "./Assets/Drones/JulesVerne.obj", self.render, droneName, "./Assets/Drones/Textures/sh3.jpg", position, 200)
-    '''def DrawCircleXY(self, centralObject, droneName):
-        # Figure out how to import math from warmups into DefensePaths.
-        unitVec = defensePaths.CircleXY()
-        unitVec.normalize()
-        #position = unitVec * 100 * 1000 + centralObject.modelNode.getPos()
-        spaceJamClasses.Drone(self.loader, "./Assets/Drones/JulesVerne.obj", self.render, droneName, "./Assets/Drones/Textures/sh3.jpg", position, 100)'''    
+    def DrawCircleXY(self):
+        self.parent = self.loader.loadModel("./Assets/Drones/JulesVerne.obj")
+        self.parent.setScale(5)
+        a = 0.0
+        aInc = 0.2
+        R = 50.0
 
+        for i in range(33):
+            posVec = (R * math.cos(a), R * math.sin(a), 0)
+            self.placeholder = self.render.attachNewNode("Placeholder")
+            self.placeholder.setPos(posVec)
+            #self.placeholder.setColor(255, 0, 0, 1)
+            self.parent.instanceTo(self.placeholder)
+            a += aInc
+    def DrawCircleXZ(self):
+        self.parent = self.loader.loadModel("./Assets/Drones/JulesVerne.obj")
+        self.parent.setScale(5)
+        a = 0.0
+        aInc = 0.2
+        R = 50.0
 
+        for i in range(30):
+            posVec = (R * math.cos(a), 0, R * math.sin(a))
+            self.placeholder = self.render.attachNewNode("Placeholder")
+            self.placeholder.setPos(posVec)
+            self.placeholder.setColor(0, 0, 255, 1)
+            self.parent.instanceTo(self.placeholder)
+            a += aInc
+    def DrawCircleYZ(self):  
+        self.parent = self.loader.loadModel("./Assets/Drones/JulesVerne.obj")
+        self.parent.setScale(5)
+        a = 0.0
+        aInc = 0.2
+        R = 50.0
+
+        for i in range(30):
+            posVec = (0, R * math.cos(a), R * math.sin(a))
+            self.placeholder = self.render.attachNewNode("Placeholder")
+            self.placeholder.setPos(posVec)
+            self.placeholder.setColor(225, 0, 0, 1)
+            self.parent.instanceTo(self.placeholder)
+            a += aInc
 
     def SetupScene(self):
         # Universe setup
